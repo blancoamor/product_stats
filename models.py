@@ -41,6 +41,21 @@ class product_product(models.Model):
 
 
 	@api.multi
+	def _update_product_abc(self):
+		products = self.env['product.product'].search([('porcentaje_total_ventas','>',0)],order='porcentaje_total_ventas desc')
+		running_total = 0
+		for product in products:
+			running_total += product.porcentaje_total_ventas
+			if running_total <= 70:
+				classification_value = 'A'
+			else:
+				if running_total <= 90:
+					classification_value = 'B'
+				else:
+					classification_value = 'C'
+			product.write({'product_abc': classification_value})
+
+	@api.multi
 	def _update_porcentaje_total_ventas(self):
 		previous_date = date.today() - timedelta(days=365)
 		invoices = self.env['account.invoice'].search([('date_invoice','>=',previous_date),
