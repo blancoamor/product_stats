@@ -20,7 +20,7 @@ class product_product(models.Model):
 	def _update_product_rank(self):
 		return_value = 0
 		import pdb;pdb.set_trace()
-		previous_date = date.today() - timedelta(days=365)
+		previous_date = datetime.date.today() - timedelta(days=365)
 		invoices = self.env['account.invoice'].search([('date_invoice','>=',previous_date),
 			('state','in',['open','paid'])])
 		product_amount = {}
