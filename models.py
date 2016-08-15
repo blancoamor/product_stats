@@ -43,5 +43,5 @@ class product_product(models.Model):
 
 
 	product_rank = fields.Integer('Ranking')
-	porcentaje_del_total = fields.Float('Porcentaje del Total')
-	product_abc = fields.Selection(selection=[('A','A'),('B','B'),('C','C')])
+	porcentaje_del_total = fields.Float('Porcentaje del Total de Ventas')
+	product_abc = fields.Selection(selection=[('A','A'),('B','B'),('C','C')],string='Clasificacion ABC')

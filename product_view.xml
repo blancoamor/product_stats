@@ -9,6 +9,8 @@
             <field name="arch" type="xml">
 		<field name="default_code" position="after">
 			<field name="product_rank" />
+			<field name="porcentaje_del_total" />
+			<field name="product_abc" />
 		</field>
 	    </field>
 	</record>
