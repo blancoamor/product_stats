@@ -36,7 +36,7 @@ class product_product(models.Model):
 		for product_id in list_products:
 			index += 1
 			vals = {
-				product_rank: index
+				'product_rank': index
 				}
 			product = self.env['product.product'].browse(product_id)
 			product.write(vals)
