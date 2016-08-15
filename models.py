@@ -25,7 +25,7 @@ class product_product(models.Model):
 			('state','in',['open','paid'])])
 		product_amount = {}
 		for invoice in invoices:
-			for invoice_line in in invoice.invoice_line:
+			for invoice_line in invoice.invoice_line:
 				if invoice_line.product_id.id not in product_amount.keys():
 					product_amount[invoice_line.product_id.id] = invoice_line.price_subtotal
 				else:
