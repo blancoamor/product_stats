@@ -19,17 +19,26 @@ class product_product(models.Model):
 	@api.multi
 	def _update_product_rank(self):
 		return_value = 0
-		import pdb;pdb.set_trace()
 		previous_date = date.today() - timedelta(days=365)
 		invoices = self.env['account.invoice'].search([('date_invoice','>=',previous_date),
 			('state','in',['open','paid'])])
 		product_amount = {}
 		for invoice in invoices:
 			for invoice_line in invoice.invoice_line:
-				if invoice_line.product_id.id not in product_amount.keys():
-					product_amount[invoice_line.product_id.id] = invoice_line.price_subtotal
-				else:
-					product_amount[invoice_line.product_id.id] += invoice_line.price_subtotal
-		self.product_rank = return_value
+				if invoice_line.product_id:
+					if invoice_line.product_id.id not in product_amount.keys():
+						product_amount[invoice_line.product_id.id] = invoice_line.price_subtotal
+					else:
+						product_amount[invoice_line.product_id.id] += invoice_line.price_subtotal
+		list_products = sorted(product_amount, key=product_amount.__getitem__)
+		index = 0
+		import pdb;pdb.set_trace()
+		for product_id in list_products:
+			index += 1
+			vals = {
+				product_rank: index
+				}
+			product = self.env['product.product'].browse(product_id)
+			product.write(vals)
 
 	product_rank = fields.Integer('Ranking')
