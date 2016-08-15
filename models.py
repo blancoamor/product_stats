@@ -42,7 +42,7 @@ class product_product(models.Model):
 
 	@api.multi
 	def _update_product_abc(self):
-		products = self.env['product.product'].search([('porcentaje_total_ventas','>',0)],order='porcentaje_total_ventas desc')
+		products = self.env['product.product'].search([('porcentaje_del_total','>',0)],order='porcentaje_del_total desc')
 		running_total = 0
 		for product in products:
 			running_total += product.porcentaje_total_ventas
