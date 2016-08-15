@@ -54,10 +54,11 @@ class product_product(models.Model):
 					else:
 						product_amount[invoice_line.product_id.id] += invoice_line.price_subtotal
 		total_amount = 0
-		for product,amount in product_amount:
+		for amount in product_amount.values():
 			total_amount = total_amount + amount
 		if total_amount > 0:
-			for product,amount in product_amount:
+			for product in product_amount.keys():
+				amount = product_amount[product]
 				percentaje = (amount / total_amount) * 100
 				vals = {
 					'porcentaje_del_total': percentaje,
