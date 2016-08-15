@@ -18,7 +18,6 @@ class product_product(models.Model):
 
 	@api.multi
 	def _update_product_rank(self):
-		return_value = 0
 		previous_date = date.today() - timedelta(days=365)
 		invoices = self.env['account.invoice'].search([('date_invoice','>=',previous_date),
 			('state','in',['open','paid'])])
@@ -40,6 +39,33 @@ class product_product(models.Model):
 			product = self.env['product.product'].browse(product_id)
 			product.write(vals)
 
+
+	@api.multi
+	def _update_porcentaje_total_ventas(self):
+		previous_date = date.today() - timedelta(days=365)
+		invoices = self.env['account.invoice'].search([('date_invoice','>=',previous_date),
+			('state','in',['open','paid'])])
+		product_amount = {}
+		for invoice in invoices:
+			for invoice_line in invoice.invoice_line:
+				if invoice_line.product_id:
+					if invoice_line.product_id.id not in product_amount.keys():
+						product_amount[invoice_line.product_id.id] = invoice_line.price_subtotal
+					else:
+						product_amount[invoice_line.product_id.id] += invoice_line.price_subtotal
+		total_amount = 0
+		for product,amount in product_amount:
+			total_amount = total_amount + amount
+		if total_amount > 0:
+			for product,amount in product_amount:
+				percentaje = (amount / total_amount) * 100
+				vals = {
+					'porcentaje_del_total': percentaje,
+					}
+				product = self.env['product.product'].browse(product)
+				product.write(vals)
+					
+		
 
 
 	product_rank = fields.Integer('Ranking')
