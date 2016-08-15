@@ -32,7 +32,6 @@ class product_product(models.Model):
 						product_amount[invoice_line.product_id.id] += invoice_line.price_subtotal
 		list_products = sorted(product_amount, key=product_amount.__getitem__)
 		index = 0
-		import pdb;pdb.set_trace()
 		for product_id in list_products:
 			index += 1
 			vals = {
@@ -41,4 +40,8 @@ class product_product(models.Model):
 			product = self.env['product.product'].browse(product_id)
 			product.write(vals)
 
+
+
 	product_rank = fields.Integer('Ranking')
+	porcentaje_del_total = fields.Float('Porcentaje del Total')
+	product_abc = fields.Selection(selection=[('A','A'),('B','B'),('C','C')])
