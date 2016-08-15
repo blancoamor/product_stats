@@ -45,7 +45,7 @@ class product_product(models.Model):
 		products = self.env['product.product'].search([('porcentaje_del_total','>',0)],order='porcentaje_del_total desc')
 		running_total = 0
 		for product in products:
-			running_total += product.porcentaje_total_ventas
+			running_total += product.porcentaje_del_total
 			if running_total <= 70:
 				classification_value = 'A'
 			else:
