@@ -137,14 +137,29 @@ class product_product(models.Model):
 		periods = str([x.id for x in period_ids])
 		periods = periods.replace('[','(')
 		periods = periods.replace(']',')')
-		sql = "select avg(cantidad),stddev(cantidad) from product_history where product_id = "+str(self.id) + \
+		if self.product_abc == 'A':
+			servicio = '0.8'
+		else:
+			if self.product_abc == 'B':
+				servicio = '0.6'
+			else:
+				servicio = '0.5'
+		norminv_str = ',norminv('+servicio
+		sql = "select avg(cantidad) as promedio,stddev(cantidad) as desvio " + \
+			"from product_history where product_id = "+str(self.id) + \
 			" and period_id in " + str(periods)
-		import pdb;pdb.set_trace()
 		self.env.cr.execute(sql)
-		for cantidad,desvio in self.env.cr.fetchall():
-			print str(cantidad)
-			print str(desvio)
-		import pdb;pdb.set_trace()
+		for promedio,desvio in self.env.cr.fetchall():
+			pass
+		sql_norminv = "select pgnumerics.norminv(" + servicio + ","+str(promedio)+","+str(desvio)+")"
+		self.env.cr.execute(sql_norminv)
+		if desvio:
+			for pto_pedido in self.env.cr.fetchall():
+				pass
+		else:
+			pto_pedido = promedio
+		self.write({'punto_pedido': pto_pedido})
+		
 
 	product_rank = fields.Integer('Ranking')
 	porcentaje_del_total = fields.Float('Porcentaje del Total de Ventas')
