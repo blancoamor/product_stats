@@ -12,6 +12,39 @@ from dateutil import relativedelta
 #Get the logger
 _logger = logging.getLogger(__name__)
 
+class product_history(models.Model):
+	_name = 'product.history'
+	_description = 'Historial de ventas del producto'
+
+	@api.multi
+	def _update_product_history(self):
+		for record in self:
+			record.unlink()
+		period_ids = self.env['account.period'].search([])
+		for period_id in period_ids:
+			dict_data = {}
+			invoices = self.env['account.invoice'].search([('state','in',['open','paid']),('period_id','=',period_id.id)])
+			for invoice in invoices:
+				for invoice_line in invoice.invoice_line:
+					if invoice_line.product_id.id not in dict_data.keys():
+						dict_data[invoice_line.product_id.id] = [invoice_line.quantity,invoice_line.price_subtotal]
+					else:
+						dict_data[invoice_line.product_id.id][0] = dict_data[invoice_line.product_id.id][0] + \
+							invoice_line.quantity
+						dict_data[invoice_line.product_id.id][1] = dict_data[invoice_line.product_id.id][1] + \
+							invoice_line.price_subtotal
+			for key in dict_data.keys():
+				vals = {
+					'period_id': period_id.id,
+					'product_id': key,
+					'cantidad': dict_data[key][0],
+					'monto_vendido': dict_data[key][1],
+					}	
+
+	product_id = fields.Many2one('product.product',string='Producto')
+	period_id = fields.Many2one('account.period',string='Periodo')
+	cantidad = fields.Integer('Cantidad vendida')
+	monto_vendido = fields.Float('Monto vendido')
 
 class product_product(models.Model):
 	_inherit = 'product.product'
@@ -87,3 +120,4 @@ class product_product(models.Model):
 	product_rank = fields.Integer('Ranking')
 	porcentaje_del_total = fields.Float('Porcentaje del Total de Ventas')
 	product_abc = fields.Selection(selection=[('A','A'),('B','B'),('C','C')],string='Clasificacion ABC')
+	product_history = fields.Many2one(comodel_name='product.history',inverse_name='product_id')
