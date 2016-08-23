@@ -15,5 +15,17 @@
 	    </field>
 	</record>
 
+        <record id="action_product_history" model="ir.actions.act_window">
+            <field name="name">Ventas/Cantidades por Mes</field>
+            <field name="res_model">product.history</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_product_history" name="Ventas/Cantidades por Mes" 
+            parent="product.base.menu_product" 
+            action="action_product_history"
+            sequence="100"/>
+
     </data>
 </openerp>
