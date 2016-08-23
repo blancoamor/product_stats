@@ -50,7 +50,11 @@
 			<field name="categ_id" />
 			<field name="product_rank" />
 			<field name="product_abc" />
+			<field name="promedio" />
+			<field name="desvio" />
 			<field name="punto_pedido" />
+			<field name="stock_seguridad" />
+			<field name="desvio" />
 		</tree>
 	    </field>
 	</record>

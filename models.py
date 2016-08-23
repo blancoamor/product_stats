@@ -158,11 +158,31 @@ class product_product(models.Model):
 				pass
 		else:
 			pto_pedido = promedio
-		self.write({'punto_pedido': pto_pedido})
+		vals = {
+			'punto_pedido': pto_pedido,
+			'promedio': promedio,
+			'desvio': desvio or 0,
+			}
+		self.write(vals)
 		
+
+	@api.one
+	def _compute_stock_seguridad(self):
+		if self.punto_pedido:
+			if (self.punto_pedido - self.promedio) > 0:
+				self.stock_seguridad = self.punto_pedido - self.promedio
+
+	@api.one
+	def _compute_pedido(self):
+		if self.promedio:
+			self.order_size = self.promedio
 
 	product_rank = fields.Integer('Ranking')
 	porcentaje_del_total = fields.Float('Porcentaje del Total de Ventas')
 	product_abc = fields.Selection(selection=[('A','A'),('B','B'),('C','C')],string='Clasificacion ABC')
 	product_history = fields.Many2one(comodel_name='product.history',inverse_name='product_id')
 	punto_pedido = fields.Integer(string='Punto de pedido')
+	stock_seguridad = fields.Integer(string='Stock Seguridad',compute=_compute_stock_seguridad)
+	order_size = fields.Integer(string='Pedido',compute=_compute_pedido)
+	promedio = fields.Integer(string='Promedio')
+	desvio = fields.Integer(string='Desvio')
