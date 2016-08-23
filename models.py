@@ -151,9 +151,9 @@ class product_product(models.Model):
 		self.env.cr.execute(sql)
 		for promedio,desvio in self.env.cr.fetchall():
 			pass
-		sql_norminv = "select pgnumerics.norminv(" + servicio + ","+str(promedio)+","+str(desvio)+")"
-		self.env.cr.execute(sql_norminv)
 		if desvio:
+			sql_norminv = "select pgnumerics.norminv(" + servicio + ","+str(promedio)+","+str(desvio)+")"
+			self.env.cr.execute(sql_norminv)
 			for pto_pedido in self.env.cr.fetchall():
 				pass
 		else:
