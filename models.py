@@ -18,13 +18,15 @@ class product_history(models.Model):
 
 	@api.multi
 	def _update_product_history(self):
-		for record in self:
+		history_ids = self.search([])
+		for record in history_ids:
 			record.unlink()
 		period_ids = self.env['account.period'].search([])
 		for period_id in period_ids:
 			_logger.debug('Logging period %s '%(period_id.name))
 			dict_data = {}
-			invoices = self.env['account.invoice'].search([('state','in',['open','paid']),('period_id','=',period_id.id)])
+			invoices = self.env['account.invoice'].search([('state','in',['open','paid']),('period_id','=',period_id.id),\
+						('type','=','out_invoice')])
 			for invoice in invoices:
 				_logger.debug('Processing invoice %s '%(invoice.internal_number))
 				for invoice_line in invoice.invoice_line:
@@ -120,10 +122,32 @@ class product_product(models.Model):
 				product = self.env['product.product'].browse(product)
 				product.write(vals)
 					
-		
+	@api.model
+	def _compute_puntos_pedidos(self):
+		products = self.env['product.product'].search([('type','=','product')])
+		for product in products:
+			history_ids = self.env['product.history'].search([('product_id','=',product.id)])
+			if history_ids:
+				product._update_punto_pedido()
 
+	@api.one
+	def _update_punto_pedido(self):
+		fecha_anterior = str(date.today() - timedelta(days=365))
+		period_ids = self.env['account.period'].search([('date_start','>=',fecha_anterior)],limit=12)
+		periods = str([x.id for x in period_ids])
+		periods = periods.replace('[','(')
+		periods = periods.replace(']',')')
+		sql = "select avg(cantidad),stddev(cantidad) from product_history where product_id = "+str(self.id) + \
+			" and period_id in " + str(periods)
+		import pdb;pdb.set_trace()
+		self.env.cr.execute(sql)
+		for cantidad,desvio in self.env.cr.fetchall():
+			print str(cantidad)
+			print str(desvio)
+		import pdb;pdb.set_trace()
 
 	product_rank = fields.Integer('Ranking')
 	porcentaje_del_total = fields.Float('Porcentaje del Total de Ventas')
 	product_abc = fields.Selection(selection=[('A','A'),('B','B'),('C','C')],string='Clasificacion ABC')
 	product_history = fields.Many2one(comodel_name='product.history',inverse_name='product_id')
+	punto_pedido = fields.Integer(string='Punto de pedido')
