@@ -15,6 +15,19 @@
 	    </field>
 	</record>
 
+        <record id="product_history_tree_view" model="ir.ui.view">
+            <field name="name">product.history.tree</field>
+            <field name="model">product.history</field>
+            <field name="arch" type="xml">
+		<tree string="Historia de ventas por producto">
+			<field name="period_id" />
+			<field name="product_id" />
+			<field name="cantidad" />
+			<field name="monto_vendido" />
+		</tree>
+	    </field>
+	</record>
+
         <record id="action_product_history" model="ir.actions.act_window">
             <field name="name">Ventas/Cantidades por Mes</field>
             <field name="res_model">product.history</field>
@@ -23,7 +36,7 @@
         </record>
 
         <menuitem id="menu_product_history" name="Ventas/Cantidades por Mes" 
-            parent="product.base.menu_product" 
+            parent="base.menu_product" 
             action="action_product_history"
             sequence="100"/>
 
