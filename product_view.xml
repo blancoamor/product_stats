@@ -41,6 +41,18 @@
 	    </field>
 	</record>
 
+        <record id="product_stats_search" model="ir.ui.view">
+            <field name="name">product.stats.search</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+		<search string="Estadisticas por producto">
+			<field name="name" />
+			<field name="default_code" />
+			<field name="categ_id" />
+		</search>
+	    </field>
+	</record>
+
         <record id="product_product_stats_tree" model="ir.ui.view">
             <field name="name">product.product.stats.tree</field>
             <field name="model">product.product</field>
@@ -65,6 +77,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
 	    <field name="view_id" ref="product_product_stats_tree" />
+	    <field name="search_id" ref="product_stats_search" />
         </record>
 
         <record id="action_product_history" model="ir.actions.act_window">
