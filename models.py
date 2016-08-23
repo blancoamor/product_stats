@@ -22,9 +22,11 @@ class product_history(models.Model):
 			record.unlink()
 		period_ids = self.env['account.period'].search([])
 		for period_id in period_ids:
+			_logger.debug('Logging period %s '%(period_id.name))
 			dict_data = {}
 			invoices = self.env['account.invoice'].search([('state','in',['open','paid']),('period_id','=',period_id.id)])
 			for invoice in invoices:
+				_logger.debug('Processing invoice %s '%(invoice.internal_number))
 				for invoice_line in invoice.invoice_line:
 					if invoice_line.product_id.id not in dict_data.keys():
 						dict_data[invoice_line.product_id.id] = [invoice_line.quantity,invoice_line.price_subtotal]
@@ -40,6 +42,7 @@ class product_history(models.Model):
 					'cantidad': dict_data[key][0],
 					'monto_vendido': dict_data[key][1],
 					}	
+				return_id = self.create(vals)
 
 	product_id = fields.Many2one('product.product',string='Producto')
 	period_id = fields.Many2one('account.period',string='Periodo')
