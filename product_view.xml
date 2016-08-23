@@ -41,6 +41,28 @@
 	    </field>
 	</record>
 
+        <record id="product_product_stats_tree" model="ir.ui.view">
+            <field name="name">product.product.stats.tree</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+		<tree string="Estadisticas por producto">
+			<field name="name" />
+			<field name="categ_id" />
+			<field name="product_rank" />
+			<field name="product_abc" />
+			<field name="punto_pedido" />
+		</tree>
+	    </field>
+	</record>
+
+        <record id="action_product_stats" model="ir.actions.act_window">
+            <field name="name">Estadisticas de productos</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+	    <field name="view_id" ref="product_product_stats_tree" />
+        </record>
+
         <record id="action_product_history" model="ir.actions.act_window">
             <field name="name">Ventas/Cantidades por Mes</field>
             <field name="res_model">product.history</field>
@@ -48,9 +70,14 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem id="menu_product_history" name="Ventas/Cantidades por Mes" 
+        <menuitem id="menu_product_history" name="Ventas/Cantidades por mes" 
             parent="base.menu_product" 
             action="action_product_history"
+            sequence="100"/>
+
+        <menuitem id="menu_product_history" name="Estadisticas por producto" 
+            parent="base.menu_product" 
+            action="action_product_stats"
             sequence="100"/>
 
     </data>
