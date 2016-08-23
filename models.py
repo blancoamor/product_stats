@@ -36,15 +36,18 @@ class product_history(models.Model):
 						dict_data[invoice_line.product_id.id][1] = dict_data[invoice_line.product_id.id][1] + \
 							invoice_line.price_subtotal
 			for key in dict_data.keys():
+				product = self.env['product.product'].browse(key)
 				vals = {
 					'period_id': period_id.id,
 					'product_id': key,
+					'categ_id': product.categ_id.id,
 					'cantidad': dict_data[key][0],
 					'monto_vendido': dict_data[key][1],
 					}	
 				return_id = self.create(vals)
 
 	product_id = fields.Many2one('product.product',string='Producto')
+	categ_id = fields.Many2one('product.category',string='Categoria')
 	period_id = fields.Many2one('account.period',string='Periodo')
 	cantidad = fields.Integer('Cantidad vendida')
 	monto_vendido = fields.Float('Monto vendido')
