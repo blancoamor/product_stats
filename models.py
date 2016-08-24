@@ -70,7 +70,7 @@ class product_product(models.Model):
 						product_amount[invoice_line.product_id.id] = invoice_line.price_subtotal
 					else:
 						product_amount[invoice_line.product_id.id] += invoice_line.price_subtotal
-		list_products = sorted(product_amount, key=product_amount.__getitem__)
+		list_products = sorted(product_amount, key=product_amount.__getitem__, reverse=True)
 		index = 0
 		for product_id in list_products:
 			index += 1
