@@ -81,6 +81,7 @@
             <field name="res_model">product.product</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+	    <field name="domain">[('product_rank','>',0)]</field>
 	    <field name="view_id" ref="product_product_stats_tree" />
 	    <field name="search_id" ref="product_stats_search" />
         </record>
