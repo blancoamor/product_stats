@@ -49,9 +49,10 @@
 			<field name="name" />
 			<field name="default_code" />
 			<field name="categ_id" />
-	                <filter string="A" domain="[('product_abc','=','A')]" icon="terp-camera_test"/>
-	                <filter string="B" domain="[('product_abc','=','B')]" icon="terp-camera_test"/>
-	                <filter string="C" domain="[('product_abc','=','C')]" icon="terp-camera_test"/>
+			<separator />
+	                <filter string="Categ A" domain="[('product_abc','=','A')]" icon="terp-camera_test"/>
+	                <filter string="Categ B" domain="[('product_abc','=','B')]" icon="terp-camera_test"/>
+	                <filter string="Categ C" domain="[('product_abc','=','C')]" icon="terp-camera_test"/>
 		</search>
 	    </field>
 	</record>
