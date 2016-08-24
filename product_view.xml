@@ -62,6 +62,7 @@
 			<field name="categ_id" />
 			<field name="product_rank" />
 			<field name="product_abc" />
+			<field name="porcentaje_del_total" />
 			<field name="promedio" />
 			<field name="desvio" />
 			<field name="punto_pedido" />
