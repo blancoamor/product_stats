@@ -90,9 +90,9 @@
         <menuitem id="menu_product_history" name="Ventas/Cantidades por mes" 
             parent="base.menu_product" 
             action="action_product_history"
-            sequence="100"/>
+            sequence="90"/>
 
-        <menuitem id="menu_product_history" name="Estadisticas por producto" 
+        <menuitem id="menu_product_stats" name="Estadisticas por producto" 
             parent="base.menu_product" 
             action="action_product_stats"
             sequence="100"/>
