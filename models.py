@@ -159,19 +159,20 @@ class product_product(models.Model):
 				pass
 		else:
 			pto_pedido = promedio
-		if type(pto_pedido) == float:
-			pto_pedido = pto_pedido
-		else:
-			pto_pedido = pto_pedido[0]
-		vals = {
-			'punto_pedido': pto_pedido,
-			'promedio': promedio,
-			'desvio': desvio or 0,
-			}
-		try:
-			self.write(vals)
-		except:
-			import pdb;pdb.set_trace()
+		if pto_pedido:
+			if type(pto_pedido) == float:
+				pto_pedido = pto_pedido
+			else:
+				pto_pedido = pto_pedido[0]
+			vals = {
+				'punto_pedido': pto_pedido,
+				'promedio': promedio,
+				'desvio': desvio or 0,
+				}
+			try:
+				self.write(vals)
+			except:
+				import pdb;pdb.set_trace()
 		
 
 	@api.one
