@@ -164,7 +164,10 @@ class product_product(models.Model):
 			'promedio': promedio,
 			'desvio': desvio or 0,
 			}
-		self.write(vals)
+		try:
+			self.write(vals)
+		except:
+			import pdb;pdb.set_trace()
 		
 
 	@api.one
