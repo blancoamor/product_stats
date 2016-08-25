@@ -69,6 +69,7 @@
 			<field name="porcentaje_del_total" />
 			<field name="promedio" />
 			<field name="desvio" />
+			<field name="qty_available" />
 			<field name="punto_pedido" />
 			<field name="stock_seguridad" />
 			<field name="desvio" />
