@@ -124,7 +124,8 @@ class product_product(models.Model):
 					
 	@api.model
 	def _compute_puntos_pedidos(self):
-		products = self.env['product.product'].search([('type','=','product'),('product_rank','>',0)])
+		# products = self.env['product.product'].search([('type','=','product'),('product_rank','>',0)])
+		products = self.env['product.product'].search([('product_rank','>',0)])
 		for product in products:
 			history_ids = self.env['product.history'].search([('product_id','=',product.id)])
 			if history_ids:
