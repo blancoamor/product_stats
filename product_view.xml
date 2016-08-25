@@ -71,8 +71,11 @@
 			<field name="desvio" />
 			<field name="qty_available" />
 			<field name="punto_pedido" />
+			<field name="order_size" />
 			<field name="stock_seguridad" />
-			<field name="desvio" />
+			<field name="qty_available" />
+			<field name="sobrante" />
+			<field name="faltante" />
 		</tree>
 	    </field>
 	</record>

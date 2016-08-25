@@ -186,6 +186,16 @@ class product_product(models.Model):
 		if self.promedio:
 			self.order_size = self.promedio
 
+	@api.one
+	def _compute_sobrante(self):
+		if (self.punto_pedido + self.order_size) > self.qty_available:
+			self.sobrante = self.qty_available - (self.punto_pedido + self.order_size)
+
+	@api.one
+	def _compute_faltante(self):
+		if (self.punto_pedido + self.order_size) < self.qty_available:
+			self.faltante = (self.punto_pedido + self.order_size) - self.qty_available
+
 	product_rank = fields.Integer('Ranking')
 	porcentaje_del_total = fields.Float('Porcentaje del Total de Ventas')
 	product_abc = fields.Selection(selection=[('A','A'),('B','B'),('C','C')],string='Clasificacion ABC')
@@ -195,3 +205,5 @@ class product_product(models.Model):
 	order_size = fields.Integer(string='Pedido',compute=_compute_pedido)
 	promedio = fields.Integer(string='Promedio')
 	desvio = fields.Integer(string='Desvio')
+	sobrante = fields.Integer(string='Sobrante',compute=_compute_sobrante)
+	faltante = fields.Integer(string='Faltante',compute=_compute_faltante)
