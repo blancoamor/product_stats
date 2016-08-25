@@ -164,7 +164,7 @@ class product_product(models.Model):
 		else:
 			pto_pedido = pto_pedido[0]
 		vals = {
-			'punto_pedido': pto_pedido[0],
+			'punto_pedido': pto_pedido,
 			'promedio': promedio,
 			'desvio': desvio or 0,
 			}
