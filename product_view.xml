@@ -76,6 +76,8 @@
 			<field name="qty_available" />
 			<field name="sobrante" />
 			<field name="faltante" />
+			<field name="sobrante_valorizado" />
+			<field name="faltante_valorizado" />
 		</tree>
 	    </field>
 	</record>

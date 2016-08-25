@@ -188,13 +188,21 @@ class product_product(models.Model):
 
 	@api.one
 	def _compute_sobrante(self):
-		if (self.punto_pedido + self.order_size) > self.qty_available:
-			self.sobrante = self.qty_available - (self.punto_pedido + self.order_size)
+		if self.punto_pedido < self.qty_available:
+			self.sobrante = self.qty_available - self.punto_pedido
 
 	@api.one
 	def _compute_faltante(self):
-		if (self.punto_pedido + self.order_size) < self.qty_available:
-			self.faltante = (self.punto_pedido + self.order_size) - self.qty_available
+		if self.punto_pedido > self.qty_available:
+			self.faltante = self.punto_pedido - self.qty_available
+
+	@api.one
+	def _compute_sobrante_valorizado(self):
+		self.sobrante_valorizado = self.sobrante * self.standard_price
+
+	@api.one
+	def _compute_faltante_valorizado(self):
+		self.faltante_valorizado = self.faltante * self.standard_price
 
 	product_rank = fields.Integer('Ranking')
 	porcentaje_del_total = fields.Float('Porcentaje del Total de Ventas')
@@ -207,3 +215,5 @@ class product_product(models.Model):
 	desvio = fields.Integer(string='Desvio')
 	sobrante = fields.Integer(string='Sobrante',compute=_compute_sobrante)
 	faltante = fields.Integer(string='Faltante',compute=_compute_faltante)
+	sobrante_valorizado = fields.Integer(string='Sobrante Valorizado',compute=_compute_sobrante_valorizado)
+	faltante_valorizado = fields.Integer(string='Faltante Valorizado',compute=_compute_faltante_valorizado)
