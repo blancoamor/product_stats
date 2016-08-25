@@ -161,10 +161,14 @@ class product_product(models.Model):
 			pto_pedido = promedio
 		vals = {
 			'punto_pedido': pto_pedido,
-			#'promedio': promedio,
-			#'desvio': desvio or 0,
+			'promedio': promedio,
+			'desvio': desvio or 0,
 			}
-		self.write(vals)
+		try:
+			self.write(vals)
+		except:
+			import pdb;pdb.set_trace()
+			pass
 		
 
 	@api.one
