@@ -127,12 +127,9 @@ class product_product(models.Model):
 		# products = self.env['product.product'].search([('type','=','product'),('product_rank','>',0)])
 		products = self.env['product.product'].search([('product_rank','>',0)])
 		for product in products:
-			try:
-				history_ids = self.env['product.history'].search([('product_id','=',product.id)])
-				if history_ids:
-					product._update_punto_pedido()
-			except:
-				pass
+			history_ids = self.env['product.history'].search([('product_id','=',product.id)])
+			if history_ids:
+				product._update_punto_pedido()
 
 	@api.one
 	def _update_punto_pedido(self):
@@ -167,24 +164,10 @@ class product_product(models.Model):
 				pto_pedido = pto_pedido
 			else:
 				pto_pedido = pto_pedido[0]
-			faltante = 0
-			sobrante = 0
-			faltante_valorizado = 0
-			sobrante_valorizado = 0
-			if pto_pedido > self.qty_available:
-				faltante = pto_pedido - self.qty_available
-				faltante_valorizado = faltante * self.standard_price
-			if pto_pedido < self.qty_available:
-				sobrante = self.qty_available - pto_pedido
-				sobrante_valorizado = sobrante * self.standard_price
 			vals = {
 				'punto_pedido': pto_pedido,
 				'promedio': promedio,
 				'desvio': desvio or 0,
-				'faltante': faltante,
-				'faltante_valorizado': faltante_valorizado,
-				'sobrante': sobrante,
-				'sobrante_valorizado': sobrante_valorizado,
 				}
 			try:
 				self.write(vals)
