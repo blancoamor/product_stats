@@ -186,8 +186,7 @@ class product_product(models.Model):
 			try:
 				self.write(vals)
 			except:
-				import pdb;pdb.set_trace()
-		
+				pass	
 
 	@api.one
 	def _compute_stock_seguridad(self):
