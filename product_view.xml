@@ -53,6 +53,9 @@
 	                <filter string="Categ A" domain="[('product_abc','=','A')]" icon="terp-camera_test"/>
 	                <filter string="Categ B" domain="[('product_abc','=','B')]" icon="terp-camera_test"/>
 	                <filter string="Categ C" domain="[('product_abc','=','C')]" icon="terp-camera_test"/>
+	                <xpath expr="//group[@string='Group by...']" position="inside">
+	                    <filter string='Clasificacion ABC' name="product_abc" domain="[]" context="{'group_by' : 'product_abc'}"/>
+			</xpath>
 		</search>
 	    </field>
 	</record>
