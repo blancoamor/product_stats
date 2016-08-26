@@ -164,10 +164,24 @@ class product_product(models.Model):
 				pto_pedido = pto_pedido
 			else:
 				pto_pedido = pto_pedido[0]
+			faltante = 0
+			sobrante = 0
+			faltante_valorizado = 0
+			sobrante_valorizado = 0
+			if pto_pedido > self.qty_available:
+				faltante = pto_pedido - self.qty_available
+				faltante_valorizado = faltante * self.standard_price
+			if pto_pedido < self.qty_available:
+				sobrante = self.qty_available - pto_pedido
+				sobrante_valorizado = sobrante * self.standard_price
 			vals = {
 				'punto_pedido': pto_pedido,
 				'promedio': promedio,
 				'desvio': desvio or 0,
+				'faltante': faltante,
+				'faltante_valorizado': faltante_valorizado,
+				'sobrante': sobrante,
+				'sobrante_valorizado': sobrante_valorizado,
 				}
 			try:
 				self.write(vals)
@@ -186,6 +200,7 @@ class product_product(models.Model):
 		if self.promedio:
 			self.order_size = self.promedio
 
+	"""
 	@api.one
 	def _compute_sobrante(self):
 		if self.punto_pedido < self.qty_available:
@@ -203,6 +218,7 @@ class product_product(models.Model):
 	@api.one
 	def _compute_faltante_valorizado(self):
 		self.faltante_valorizado = self.faltante * self.standard_price
+	"""
 
 	product_rank = fields.Integer('Ranking')
 	porcentaje_del_total = fields.Float('Porcentaje del Total de Ventas')
@@ -213,7 +229,11 @@ class product_product(models.Model):
 	order_size = fields.Integer(string='Pedido',compute=_compute_pedido)
 	promedio = fields.Integer(string='Promedio')
 	desvio = fields.Integer(string='Desvio')
-	sobrante = fields.Integer(string='Sobrante',compute=_compute_sobrante)
-	faltante = fields.Integer(string='Faltante',compute=_compute_faltante)
-	sobrante_valorizado = fields.Integer(string='Sobrante Valorizado',compute=_compute_sobrante_valorizado)
-	faltante_valorizado = fields.Integer(string='Faltante Valorizado',compute=_compute_faltante_valorizado)
+	#sobrante = fields.Integer(string='Sobrante',compute=_compute_sobrante)
+	#faltante = fields.Integer(string='Faltante',compute=_compute_faltante)
+	#sobrante_valorizado = fields.Integer(string='Sobrante Valorizado',compute=_compute_sobrante_valorizado)
+	#faltante_valorizado = fields.Integer(string='Faltante Valorizado',compute=_compute_faltante_valorizado)
+	sobrante = fields.Integer(string='Sobrante')
+	faltante = fields.Integer(string='Faltante')
+	sobrante_valorizado = fields.Integer(string='Sobrante Valorizado')
+	faltante_valorizado = fields.Integer(string='Faltante Valorizado')
