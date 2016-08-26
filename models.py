@@ -121,7 +121,33 @@ class product_product(models.Model):
 					}
 				product = self.env['product.product'].browse(product)
 				product.write(vals)
-					
+				
+
+	@api.model
+	def _compute_sobrantes_faltantes(self):
+		products = self.env['product.product'].search([('product_rank','>',0)])
+		for product in products:
+			faltante = 0
+			faltante_valorizado = 0
+			sobrante = 0
+			sobrante_valorizado = 0
+			if product.qty_available > product.punto_pedido:
+				sobrante = product.qty_available - product.punto_pedido
+				sobrante_valorizado = sobrante * product.standard_price
+			if product.punto_pedido > product.qty_available:
+				faltante = product.punto_pedido - product.qty_available
+				faltante_valorizado = faltante * product.standard_price
+			vals = {
+				'faltante': faltante,
+				'faltante_valorizado': faltante_valorizado,
+				'sobrante': sobrante,
+				'sobrante_valorizado': sobrante_valorizado,
+				}
+			try:
+				product.write(vals)
+			except:
+				pass
+
 	@api.model
 	def _compute_puntos_pedidos(self):
 		# products = self.env['product.product'].search([('type','=','product'),('product_rank','>',0)])
