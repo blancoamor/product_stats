@@ -11,15 +11,31 @@ from openerp import models, fields, api
 class product_generate_abastecimiento(models.TransientModel):
 	_name= 'product.generate.abastecimiento'
 
-	warehouse_id = fields.Many2one('stock.warehouse',string='Almacen')
-	location_id = fields.Many2one('stock.location',string='Ubicacion')
+	warehouse_id = fields.Many2one('stock.warehouse',string='Almacen',required=True)
+	location_id = fields.Many2one('stock.location',string='Ubicacion',required=True,domain=[('type','=','internal')])
 
 	@api.multi
 	def generate_abastecimiento(self):
-		import pdb;pdb.set_trace()
 		context = self.env.context
 		if context['active_model'] == 'product.product':
 			for active_id in context['active_ids']:
 				product = self.env['product.product'].browse(active_id)
+				if product.punto_pedido:
+					vals = {
+						'warehouse_id': self.warehouse_id.id,
+						'location_id': self.location_id.id,
+						'product_id': active_id,
+						'active': True,
+						'product_min_qty': product.punto_pedido,
+						'qty_multiple': 1,
+						'product_max_qty': product.punto_pedido + product.order_size,
+						}
+					orderpoint_id = self.env['stock.warehouse.orderpoint'].search([('product_id','=',active_id),\
+									('warehouse_id','=',self.warehouse_id.id),\
+									('location_id','=',self.location_id.id)])
+					if not orderpoint_id:
+						return_id = self.env['stock.warehouse.orderpoint'].create(vals)
+					else:
+						return_id = self.env['stock.warehouse.orderpoint'].write(vals)
 		return None		
 
