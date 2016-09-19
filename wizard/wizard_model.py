@@ -9,7 +9,6 @@ import logging
 from openerp.exceptions import Warning
 from openerp import SUPERUSER_ID
 import openerp.addons.decimal_precision as dp
-from openerp.addons.dhl_delivery_carrier.models.dhl_delivery_carrier import get_encoded
 _logger = logging.getLogger(__name__)
 from openerp import models, fields, api
 
