@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
  <openerp>
  	<data>
- 		<record id="view_action_generate_abastecimiento" model="ir.ui.view">
+
+	<record id="view_action_generate_abastecimiento" model="ir.ui.view">
             <field name="name">Generar Abastecimientos</field>
             <field name="model">product.generate.abastecimiento</field>
             <field name="arch" type="xml">
                 <form string="Generar Abastecimiento">                                         
-                     <footer>
+		   <footer>
                         <button name="generate_abastecimiento" string="Generar Abastecimientos" 
                                 type="object" class="oe_highlight"/>
                         or
                         <button string="Cancel" class="oe_link" special="cancel" />
-                    </footer>
+		   </footer>
                </form>
             </field>
         </record>
@@ -19,7 +20,7 @@
         <record id="action_generate_abastecimiento" model="ir.actions.act_window">
             <field name="name">Generar Abastecimiento</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">product.product</field>
+            <field name="res_model">product.generate.abastecimiento</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_action_generate_abastecimiento"/>
