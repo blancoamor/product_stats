@@ -49,13 +49,14 @@
 			<field name="name" />
 			<field name="default_code" />
 			<field name="categ_id" />
-			<!-- field name="supplier_id" / -->
+			<field name="supplier_id" />
 			<separator />
 	                <filter string="Categ A" domain="[('product_abc','=','A')]" icon="terp-camera_test"/>
 	                <filter string="Categ B" domain="[('product_abc','=','B')]" icon="terp-camera_test"/>
 	                <filter string="Categ C" domain="[('product_abc','=','C')]" icon="terp-camera_test"/>
 	                <xpath expr="//group[@string='Group by...']" position="inside">
 	                    <filter string='Clasificacion ABC' name="product_abc" domain="[]" context="{'group_by' : 'product_abc'}"/>
+	                    <filter string='Proveedor' name="supplier_id" domain="[]" context="{'group_by' : 'supplier_id'}"/>
 			</xpath>
 		</search>
 	    </field>
