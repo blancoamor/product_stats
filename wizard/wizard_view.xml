@@ -28,12 +28,11 @@
         </record>
 
         <record model="ir.values" id="model_product_abastecimiento">
-            <field name="model_id" ref="product.model_product_product" />
             <field name="name">Generar Abastecimiento</field>
             <field name="key2">client_action_multi</field>
             <field name="value" eval="'ir.actions.act_window,' + str(ref('action_generate_abastecimiento'))" />
             <field name="key">action</field>
-            <field name="model">stock.picking</field>
+            <field name="model">product.product</field>
         </record>		
 	</data>
 </openerp>

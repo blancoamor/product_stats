@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-#################################################################################
-#
-#    Copyright (c) 2015-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>)
-#
-#################################################################################
 from datetime import datetime
 import logging
 from openerp.exceptions import Warning
@@ -17,7 +12,7 @@ class product_generate_abastecimiento(models.TransientModel):
 	_name= 'product.generate.abastecimiento'
 
 	@api.multi
-	def generate_bbx_shipment_label(self):
+	def generate_abastecimiento(self):
 		import pdb;pdb.set_trace()
 		
 
