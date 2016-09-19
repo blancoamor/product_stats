@@ -3,7 +3,7 @@
  	<data>
  		<record id="view_action_generate_abastecimiento" model="ir.ui.view">
             <field name="name">Generar Abastecimientos</field>
-            <field name="model">product.generar.abastecimiento</field>
+            <field name="model">product.generate.abastecimiento</field>
             <field name="arch" type="xml">
                 <form string="Generar Abastecimiento">                                         
                      <footer>
@@ -19,7 +19,7 @@
         <record id="action_generate_abastecimiento" model="ir.actions.act_window">
             <field name="name">Generar Abastecimiento</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">multi.package.shipment.wizard</field>
+            <field name="res_model">product.product</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_action_generate_abastecimiento"/>
