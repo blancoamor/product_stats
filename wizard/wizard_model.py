@@ -12,7 +12,7 @@ class product_generate_abastecimiento(models.TransientModel):
 	_name= 'product.generate.abastecimiento'
 
 	warehouse_id = fields.Many2one('stock.warehouse',string='Almacen',required=True)
-	location_id = fields.Many2one('stock.location',string='Ubicacion',required=True,domain=[('type','=','internal')])
+	location_id = fields.Many2one('stock.location',string='Ubicacion',required=True,domain=[('usage','=','internal')])
 
 	@api.multi
 	def generate_abastecimiento(self):
