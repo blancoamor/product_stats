@@ -7,11 +7,11 @@
             <field name="model">product.generate.abastecimiento</field>
             <field name="arch" type="xml">
                 <form string="Generar Abastecimiento">                                         
-		   <footer>
 			<group string="Deposito">
 				<field name="warehouse_id" />
 				<field name="location_id" />
 			</group>
+		   <footer>
                         <button name="generate_abastecimiento" string="Generar Abastecimientos" 
                                 type="object" class="oe_highlight"/>
                         or
