@@ -49,6 +49,7 @@
 			<field name="name" />
 			<field name="default_code" />
 			<field name="categ_id" />
+			<field name="supplier_id" />
 			<separator />
 	                <filter string="Categ A" domain="[('product_abc','=','A')]" icon="terp-camera_test"/>
 	                <filter string="Categ B" domain="[('product_abc','=','B')]" icon="terp-camera_test"/>
@@ -67,6 +68,7 @@
 		<tree string="Estadisticas por producto">
 			<field name="name" />
 			<field name="categ_id" />
+			<field name="supplier_id" />
 			<field name="product_rank" />
 			<field name="product_abc" />
 			<field name="porcentaje_del_total" />
