@@ -8,8 +8,10 @@
             <field name="arch" type="xml">
                 <form string="Generar Abastecimiento">                                         
 		   <footer>
-			<field name="warehouse_id" />
-			<field name="location_id" />
+			<group string="Deposito">
+				<field name="warehouse_id" />
+				<field name="location_id" />
+			</group>
                         <button name="generate_abastecimiento" string="Generar Abastecimientos" 
                                 type="object" class="oe_highlight"/>
                         or
