@@ -231,6 +231,12 @@ class product_product(models.Model):
 		self.faltante_valorizado = self.faltante * self.standard_price
 	"""
 
+	@api.one
+	def _compute_internal_category(self):
+		if self.product_tmpl_id.categ_id:
+			self.internal_category = self.product_templ_id.categ_id.id
+
+	internal_category = fields.Many2one('product.category',compute=_compute_internal_category,store=True)
 	product_rank = fields.Integer('Ranking')
 	porcentaje_del_total = fields.Float('Porcentaje del Total de Ventas')
 	product_abc = fields.Selection(selection=[('A','A'),('B','B'),('C','C')],string='Clasificacion ABC')
