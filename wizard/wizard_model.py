@@ -34,7 +34,7 @@ class product_generate_abastecimiento(models.TransientModel):
 						}
 					orderpoint_id = self.env['stock.warehouse.orderpoint'].search([('product_id','=',active_id),\
 									('warehouse_id','=',self.warehouse_id.id),\
-									('location_id','=',self.location_id.id)])
+									('location_id','=',self.warehouse_id.lot_stock_id.id)])
 					if not orderpoint_id:
 						return_id = self.env['stock.warehouse.orderpoint'].create(vals)
 					else:
