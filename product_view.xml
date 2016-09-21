@@ -105,6 +105,46 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+    <record id="view_product_graph" model="ir.ui.view">
+         <field name="name">product.product.graph</field>
+         <field name="model">product.product</field>
+         <field name="arch" type="xml">
+             <graph string="Pivot Producto" type="pivot" stacked="True">
+                 <field name="name" type="row"/>
+                 <field name="category_id" type="row"/>
+			<field name="supplier_id" type="row"/>
+			<field name="product_rank" type="row"/>
+			<field name="product_abc" type="col"/>
+			<field name="qty_available" type="measure"/>
+			<field name="punto_pedido" type="measure"/>
+			<field name="order_size" type="measure"/>
+			<field name="stock_seguridad" type="measure"/>
+			<field name="qty_available" type="measure"/>
+			<field name="sobrante" type="measure"/>
+			<field name="faltante" type="measure"/>
+			<field name="sobrante_valorizado" type="measure"/>
+			<field name="faltante_valorizado" type="measure"/>
+		</graph>
+	    </field>
+	</record>
+
+        <record id="action_product_history" model="ir.actions.act_window">
+            <field name="name">Ventas/Cantidades por Mes</field>
+            <field name="res_model">product.history</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record id="action_product_stats_pivot" model="ir.actions.act_window">
+            <field name="name">Pivot por producto</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+	    <field name="domain">[('product_rank','>',0)]</field>
+	    <field name="view_id" ref="view_product_graph" />
+        </record>
+
         <menuitem id="menu_product_history" name="Ventas/Cantidades por mes" 
             parent="base.menu_product" 
             action="action_product_history"
@@ -114,6 +154,11 @@
             parent="base.menu_product" 
             action="action_product_stats"
             sequence="100"/>
+
+        <menuitem id="menu_product_stats_pivot" name="Pivot por producto" 
+            parent="base.menu_product" 
+            action="action_product_stats_pivot"
+            sequence="110"/>
 
     </data>
 </openerp>
