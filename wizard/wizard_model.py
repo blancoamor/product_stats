@@ -12,7 +12,7 @@ class product_generate_abastecimiento(models.TransientModel):
 	_name= 'product.generate.abastecimiento'
 
 	warehouse_id = fields.Many2one('stock.warehouse',string='Almacen',required=True)
-	location_id = fields.Many2one('stock.location',string='Ubicacion',required=True,domain=[('usage','=','internal')])
+	#location_id = fields.Many2one('stock.location',string='Ubicacion',required=True,domain=[('usage','=','internal')])
 
 	@api.multi
 	def generate_abastecimiento(self):
@@ -20,10 +20,12 @@ class product_generate_abastecimiento(models.TransientModel):
 		if context['active_model'] == 'product.product':
 			for active_id in context['active_ids']:
 				product = self.env['product.product'].browse(active_id)
+				#lot_stock_id
+				#import pdb;pdb.set_trace()
 				if product.punto_pedido:
 					vals = {
 						'warehouse_id': self.warehouse_id.id,
-						'location_id': self.location_id.id,
+						'location_id': self.warehouse_id.lot_stock_id.id,
 						'product_id': active_id,
 						'active': True,
 						'product_min_qty': product.punto_pedido,

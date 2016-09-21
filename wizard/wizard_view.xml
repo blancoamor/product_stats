@@ -9,7 +9,7 @@
                 <form string="Generar Abastecimiento">                                         
 			<group string="Deposito">
 				<field name="warehouse_id" />
-				<field name="location_id" />
+				<!-- field name="location_id" / -->
 			</group>
 		   <footer>
                         <button name="generate_abastecimiento" string="Generar Abastecimientos" 
