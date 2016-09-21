@@ -112,6 +112,7 @@
              <graph string="Pivot Producto" type="pivot" stacked="True">
                  <field name="name" type="row"/>
 			<field name="internal_category" type="row"/>
+			<field name="internal_supplier" type="row"/>
 			<field name="product_rank" type="row"/>
 			<field name="product_abc" type="col"/>
 			<field name="qty_available" type="measure"/>

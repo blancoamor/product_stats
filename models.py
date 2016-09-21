@@ -236,6 +236,12 @@ class product_product(models.Model):
 		if self.product_tmpl_id.categ_id:
 			self.internal_category = self.product_templ_id.categ_id.id
 
+	@api.one
+	def _compute_internal_supplier(self):
+		if self.product_tmpl_id.supplier_id:
+			self.internal_supplier = self.product_tmpl_id.supplier_id.id
+
+	internal_supplier = fields.Many2one('res.partner',compute=_compute_internal_supplier,store=True)
 	internal_category = fields.Many2one('product.category',compute=_compute_internal_category,store=True)
 	product_rank = fields.Integer('Ranking')
 	porcentaje_del_total = fields.Float('Porcentaje del Total de Ventas')
