@@ -111,7 +111,6 @@
          <field name="arch" type="xml">
              <graph string="Pivot Producto" type="pivot" stacked="True">
                  <field name="name" type="row"/>
-                 <field name="category_id" type="row"/>
 			<field name="supplier_id" type="row"/>
 			<field name="product_rank" type="row"/>
 			<field name="product_abc" type="col"/>
