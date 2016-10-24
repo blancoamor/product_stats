@@ -195,10 +195,10 @@ class product_product(models.Model):
 				'promedio': promedio,
 				'desvio': desvio or 0,
 				}
-			try:
-				self.write(vals)
-			except:
-				pass	
+			#try:
+			self.write(vals)
+			#except:
+			#	pass	
 
 	@api.one
 	def _compute_stock_seguridad(self):
