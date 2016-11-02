@@ -155,10 +155,10 @@ class product_product(models.Model):
 		for product in products:
 			history_ids = self.env['product.history'].search([('product_id','=',product.id)])
 			if history_ids:
-				product._update_punto_pedido()
+				product.update_punto_pedido()
 
 	@api.one
-	def _update_punto_pedido(self):
+	def update_punto_pedido(self):
 		fecha_anterior = str(date.today() - timedelta(days=365))
 		period_ids = self.env['account.period'].search([('date_start','>=',fecha_anterior)],limit=12)
 		periods = str([x.id for x in period_ids])
